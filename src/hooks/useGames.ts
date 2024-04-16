@@ -1,25 +1,21 @@
-import { useState, useEffect } from "react";
-import gameService, { Game } from "../services/game-service";
+import useData from "./useData";
+
+export interface Platform {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface Game {
+  id: number;
+  name: string;
+  background_image: string;
+  parent_platforms: { platform: Platform }[];
+  metacritic: number;
+}
 
 const useGames = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    gameService
-      .fetchAll()
-      .then(({ data }) => {
-        setGames(data.results);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
+  const { data: games, error, isLoading } = useData<Game>("/games");
   return { games, error, isLoading };
 };
 
