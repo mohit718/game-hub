@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+
+export interface ApiRequestConfig extends AxiosRequestConfig {}
 
 export default axios.create({
   baseURL: "https://api.rawg.io/api",

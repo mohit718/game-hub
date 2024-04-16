@@ -1,4 +1,4 @@
-import api from "./api-client";
+import api, { ApiRequestConfig } from "./api-client";
 
 export interface FetchResponse<T> {
   count: number;
@@ -12,8 +12,8 @@ class DataService<T> {
     this.endpoint = endpoint;
   }
 
-  fetchAll() {
-    return api.get<FetchResponse<T>>(this.endpoint);
+  fetchAll(requestConfig?: ApiRequestConfig) {
+    return api.get<FetchResponse<T>>(this.endpoint, requestConfig);
   }
 }
 
