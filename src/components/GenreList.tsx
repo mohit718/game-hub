@@ -14,7 +14,7 @@ type Props = {
   onSelectGenre: (genre: Genre) => void;
 };
 function GenreList({ selectedGenre, onSelectGenre }: Props) {
-  const { genres, error, isLoading } = useGenres();
+  const { data: genres, error, isLoading } = useGenres();
 
   if (error) return null;
   if (isLoading) return <Spinner />;
