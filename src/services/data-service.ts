@@ -13,7 +13,13 @@ class DataService<T> {
   }
 
   fetchAll(requestConfig?: ApiRequestConfig) {
-    return api.get<FetchResponse<T>>(this.endpoint, requestConfig);
+    const controller = new AbortController();
+    const request = api.get<FetchResponse<T>>(this.endpoint, {
+      ...requestConfig,
+      signal: controller.signal,
+    });
+    const cancel = () => controller.abort();
+    return { request, cancel };
   }
 }
 

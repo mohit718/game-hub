@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import create from "../services/data-service";
-import { ApiRequestConfig } from "../services/api-client";
+import { ApiRequestConfig, CanceledError } from "../services/api-client";
 
 const useData = <T>(
   endpoint: string,
@@ -15,16 +15,18 @@ const useData = <T>(
   useEffect(
     () => {
       setLoading(true);
-      dataService
-        .fetchAll(requestConfig)
+      const { request, cancel } = dataService.fetchAll(requestConfig);
+      request
         .then(({ data }) => {
           setData(data.results);
           setLoading(false);
         })
         .catch((err) => {
+          if (err instanceof CanceledError) return;
           setError(err.message);
           setLoading(false);
         });
+      return () => cancel();
     },
     deps ? [...deps] : []
   );

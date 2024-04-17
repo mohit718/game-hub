@@ -1,4 +1,4 @@
-import useData from "./useData";
+import genres from "../data/genres";
 
 export type Genre = {
   id: number;
@@ -8,6 +8,7 @@ export type Genre = {
   image_background: string;
 };
 
-const useGenres = () => useData<Genre>("/genres");
+// const useGenres = () => useData<Genre>("/genres"); // Realtime Genres
+const useGenres = () => ({ data: genres, isLoading: false, error: null }); // Cached Genres
 
 export default useGenres;
