@@ -17,7 +17,7 @@ type Props = {
   platforms: Platform[];
 };
 
-function PlatformIconList({ platforms }: Props) {
+function PlatformIconList({ platforms = [] }: Props) {
   const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
     playstation: FaPlaystation,
